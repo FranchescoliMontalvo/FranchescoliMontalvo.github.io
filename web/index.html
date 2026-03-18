@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Especial</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6b0f1a, #3a0a12);
+            overflow-x: hidden;
+        }
+
+        /* fondo */
+        .fondo-img {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('img/1.1.png') repeat;
+            background-size: 80px;
+            opacity: 0.07;
+            animation: moverFondo 40s linear infinite;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 15px;
+        }
+
+        .card {
+            position: relative;
+            background: linear-gradient(145deg, #ffffff, #fff5f6);
+            border-radius: 30px;
+            padding: 30px;
+            color: #333;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            animation: fadeIn 1.2s ease;
+        }
+
+        /* borde */
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            padding: 2px;
+            background: linear-gradient(120deg, #ff9aa2, #ffc3a0, #ffdde1, #ff9aa2);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* imágenes */
+        .img-left {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 85px;
+            opacity: 0.75;
+            border-radius: 14px;
+            transform: rotate(-8deg);
+            pointer-events: none;
+        }
+
+        .img-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 110px;
+            opacity: 0.8;
+            border-radius: 14px;
+            transform: rotate(8deg);
+            pointer-events: none;
+        }
+
+        /* texto */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            color: #6b0f1a;
+            margin-bottom: 10px;
+        }
+
+        .sub {
+            text-align: center;
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .texto {
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .firma {
+            margin-top: 25px;
+            text-align: right;
+            font-style: italic;
+            color: #6b0f1a;
+        }
+
+        button {
+            display: block;
+            margin: 25px auto 0;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #6b0f1a, #9e2a3a);
+            color: white;
+            cursor: pointer;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            max-width: 500px;
+            width: 90%;
+            padding: 25px;
+            border-radius: 25px;
+            color: #fff;
+            position: relative;
+            animation: fadeIn 0.6s ease;
+
+            
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }
+
+        .texto-modal {
+            position: relative;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(4px);
+        }
+
+        .texto-modal p {
+            font-family: 'Playfair Display', serif;
+            line-height: 1.8;
+            text-align: justify;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        /* imagen dentro del texto */
+        .decoracion-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 90px;
+            opacity: 0.8;
+            border-radius: 12px;
+            transform: rotate(6deg);
+        }
+
+        /* animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes moverFondo {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 300px 300px;
+            }
+        }
+
+        /* 📱 RESPONSIVE */
+        @media(max-width:600px) {
+
+            .container {
+                margin: 25px auto;
+                padding: 10px;
+            }
+
+            .card {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .sub {
+                font-size: 0.9rem;
+            }
+
+            .texto {
+                font-size: 0.95rem;
+            }
+
+            .firma {
+                font-size: 0.9rem;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .img-left {
+                width: 55px;
+                bottom: 15px;
+                left: 15px;
+            }
+
+            .img-right {
+                width: 70px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .decoracion-modal {
+                width: 60px;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="fondo-img"></div>
+
+    <div class="container">
+        <div class="card">
+
+            <img src="img/3.jpg" class="img-left">
+            <img src="img/4.jpg" class="img-right">
+
+            <h1>Para Ariana ❤️</h1>
+            <p class="sub">Una pequeña carta</p>
+
+            <div class="texto">
+                <p>No sabía muy bien cómo empezar esto, pero sentía que tenía que escribirte. A veces hay cosas que se
+                    entienden mejor cuando uno se toma el tiempo de decirlas bien.</p>
+                <p>No soy perfecto, pero sí tengo claro que me importas, y que quiero hacer las cosas mejor contigo.</p>
+                <p>No espero que todo sea perfecto, solo que podamos seguir construyendo algo sincero, a nuestro ritmo.
+                </p>
+            </div>
+
+            <div class="firma">
+                Con cariño,<br>Franchesco
+            </div>
+
+            <button onclick="mostrarMensaje()">Dale aquí 💌</button>
+
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal" onclick="cerrarModal()">
+
+        <div class="modal-content" onclick="event.stopPropagation()">
+
+            <span class="close" onclick="cerrarModal()">✖</span>
+
+            <h2 style="text-align:center;margin-bottom:15px;font-family:'Playfair Display',serif;">
+                Perdón 💌
+            </h2>
+
+            <div class="texto-modal">
+
+                <p style="line-height:1.7;text-align:justify;"> Quería decirte esto con calma… sé que en algunos
+                    momentos se
+                    me escaparon palabras que no estuvieron bien, y hubiera querido que las cosas hubieran pasado de
+                    otra
+                    forma. <br><br> No es excusa, pero esas dos veces reaccione sin pensar, y espero que con este
+                    detalle me
+                    puedas perdonar, extraño ver tus fotos cuando me las enviabas y que me digas que aun no me perdonas.
+                    <br><br> Te quiero, y por eso mismo me importa reconocer mis errores. Es por eso que quiero que me
+                    perdones, ya eres alguien muy importante para mi. <br><br> Espero que puedas perdonarme.
+                </p>
+
+                
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function mostrarMensaje() {
+            document.getElementById("modal").style.display = "flex";
+        }
+        function cerrarModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>
